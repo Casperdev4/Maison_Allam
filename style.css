@@ -163,33 +163,6 @@ body {
     animation: fadeInUp 1.5s ease;
 }
 
-.hero-emblem {
-    margin-bottom: 2rem;
-}
-
-.emblem-border {
-    display: inline-block;
-    padding: 8px;
-    border: 2px solid var(--gold);
-    border-radius: 50%;
-    position: relative;
-}
-
-.emblem-border::before {
-    content: '';
-    position: absolute;
-    inset: -8px;
-    border: 1px solid rgba(201, 168, 76, 0.3);
-    border-radius: 50%;
-}
-
-.emblem-border img {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
 .hero-title {
     margin-bottom: 1.5rem;
 }
@@ -207,7 +180,7 @@ body {
 
 .hero-title-main {
     display: block;
-    font-family: 'Cinzel Decorative', serif;
+    font-family: 'Cinzel', serif;
     font-size: 4.5rem;
     font-weight: 700;
     color: var(--gold);
@@ -2047,6 +2020,11 @@ body {
 
     .nav-links.open {
         display: flex;
+    }
+
+    .hero {
+        min-height: auto;
+        padding: 6rem 1rem 5rem;
     }
 
     .hero-title-main {
