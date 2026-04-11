@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arbre Généalogique — Maison ALLAM</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Cinzel:wght@400;500;600;700&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="nav scrolled" id="nav">
+        <div class="nav-logo">
+            <a href="index.html"><img src="logo.png" alt="AWPF"></a>
+        </div>
+        <button class="nav-toggle" id="navToggle" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="histoire.html">Notre Histoire</a></li>
+            <li><a href="arbre.html" class="active">Arbre Généalogique</a></li>
+            <li><a href="charte.html">Charte Familiale</a></li>
+            <li><a href="heritage.html">Héritage & Vision</a></li>
+        </ul>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-hero">
+        <div class="page-hero-overlay"></div>
+        <div class="page-hero-content">
+            <span class="section-label">Chapitre II</span>
+            <h1 class="section-title">Arbre Généalogique</h1>
+            <div class="title-ornament">
+                <span class="ornament-line"></span>
+                <span class="ornament-symbol">&#9830;</span>
+                <span class="ornament-line"></span>
+            </div>
+            <p class="section-subtitle">Cliquez sur un membre pour voir ses informations</p>
+        </div>
+    </section>
+
+    <!-- Contenu Arbre -->
+    <section class="section section-arbre">
+        <div class="container">
+            <div class="tree-controls">
+                <button class="tree-btn active" data-view="tree">Vue Arbre</button>
+                <button class="tree-btn" data-view="list">Vue Liste</button>
+            </div>
+            <div class="tree-container" id="treeContainer">
+                <div class="tree" id="familyTree">
+                    <!-- Génération 1 — Fondateurs -->
+                    <div class="tree-generation" data-gen="1">
+                        <div class="gen-label">Fondateurs</div>
+                        <div class="tree-row">
+                            <div class="tree-couple">
+                                <div class="tree-member founder" data-id="1">
+                                    <div class="member-avatar">
+                                        <span class="avatar-initials">M</span>
+                                        <span class="member-crown">&#9813;</span>
+                                    </div>
+                                    <div class="member-info">
+                                        <span class="member-name">Bilal ALLAM</span>
+                                        <span class="member-role">Patriarche & Fondateur</span>
+                                        <span class="member-metier">Dev Web · Cybersécurité · Investisseur</span>
+                                    </div>
+                                </div>
+                                <div class="couple-link">&#9829;</div>
+                                <div class="tree-member founder" data-id="2">
+                                    <div class="member-avatar">
+                                        <span class="avatar-initials">A</span>
+                                        <span class="member-crown">&#9813;</span>
+                                    </div>
+                                    <div class="member-info">
+                                        <span class="member-name">Alicia ALLAM</span>
+                                        <span class="member-role">Co-fondatrice</span>
+                                        <span class="member-metier">Formatrice · BNP Paribas Cardif</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Ligne de connexion -->
+                    <div class="tree-connector">
+                        <div class="connector-line"></div>
+                    </div>
+                    <!-- Génération 2 — Les Héritiers -->
+                    <div class="tree-generation" data-gen="2">
+                        <div class="gen-label">2<sup>e</sup> Génération — Les Héritiers</div>
+                        <div class="tree-row">
+                            <div class="tree-member" data-id="3">
+                                <div class="member-avatar">
+                                    <span class="avatar-initials">D</span>
+                                </div>
+                                <div class="member-info">
+                                    <span class="member-name">Dahlia ALLAM</span>
+                                    <span class="member-role">Première Héritière</span>
+                                    <span class="member-metier">Future Psychiatre</span>
+                                    <span class="member-mission">Santé · Prestige · Protection mentale de la famille</span>
+                                </div>
+                            </div>
+                            <div class="tree-member future-member" data-id="4">
+                                <div class="member-avatar">
+                                    <span class="avatar-initials">?</span>
+                                </div>
+                                <div class="member-info">
+                                    <span class="member-name">Enfant n°2</span>
+                                    <span class="member-role">In sha Allah — prévu aux 4 ans de Dahlia</span>
+                                    <span class="member-metier">Futur Avocat d'Affaires</span>
+                                    <span class="member-mission">Droit · Fiscalité · Protection du patrimoine</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Ligne de connexion -->
+                    <div class="tree-connector">
+                        <div class="connector-line"></div>
+                    </div>
+                    <!-- Génération 3 — L'Empire -->
+                    <div class="tree-generation" data-gen="3">
+                        <div class="gen-label">3<sup>e</sup> Génération — L'Empire</div>
+                        <div class="tree-row">
+                            <div class="tree-member future-member" data-id="5">
+                                <div class="member-avatar">
+                                    <span class="avatar-initials">?</span>
+                                </div>
+                                <div class="member-info">
+                                    <span class="member-name">Petit-enfant 1</span>
+                                    <span class="member-role">Branche Dahlia</span>
+                                    <span class="member-metier">Finance · Gestion de patrimoine</span>
+                                    <span class="member-mission">Pilotage des investissements ALLAM</span>
+                                </div>
+                            </div>
+                            <div class="tree-member future-member" data-id="6">
+                                <div class="member-avatar">
+                                    <span class="avatar-initials">?</span>
+                                </div>
+                                <div class="member-info">
+                                    <span class="member-name">Petit-enfant 2</span>
+                                    <span class="member-role">Branche Dahlia</span>
+                                    <span class="member-metier">Immobilier · Développement</span>
+                                    <span class="member-mission">Expansion ALLAM Immo</span>
+                                </div>
+                            </div>
+                            <div class="tree-member future-member" data-id="7">
+                                <div class="member-avatar">
+                                    <span class="avatar-initials">?</span>
+                                </div>
+                                <div class="member-info">
+                                    <span class="member-name">Petit-enfant 3</span>
+                                    <span class="member-role">Branche Enfant 2</span>
+                                    <span class="member-metier">Tech · Cybersécurité</span>
+                                    <span class="member-mission">Reprise Privora & WebPrime</span>
+                                </div>
+                            </div>
+                            <div class="tree-member future-member" data-id="8">
+                                <div class="member-avatar">
+                                    <span class="avatar-initials">?</span>
+                                </div>
+                                <div class="member-info">
+                                    <span class="member-name">Petit-enfant 4</span>
+                                    <span class="member-role">Branche Enfant 2</span>
+                                    <span class="member-metier">Commerce international</span>
+                                    <span class="member-mission">Expansion internationale ALLAM</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Ligne de connexion -->
+                    <div class="tree-connector">
+                        <div class="connector-line"></div>
+                    </div>
+                    <!-- Génération 4 — La Puissance -->
+                    <div class="tree-generation" data-gen="4">
+                        <div class="gen-label">4<sup>e</sup> Génération — La Puissance</div>
+                        <div class="tree-row">
+                            <div class="tree-member future-member" data-id="9">
+                                <div class="member-avatar">
+                                    <span class="avatar-initials">?</span>
+                                </div>
+                                <div class="member-info">
+                                    <span class="member-name">Arrière-petit-enfant 1</span>
+                                    <span class="member-role">Branche Finance</span>
+                                    <span class="member-metier">Pharmacie</span>
+                                    <span class="member-mission">Chaîne de pharmacies familiale</span>
+                                </div>
+                            </div>
+                            <div class="tree-member future-member" data-id="10">
+                                <div class="member-avatar">
+                                    <span class="avatar-initials">?</span>
+                                </div>
+                                <div class="member-info">
+                                    <span class="member-name">Arrière-petit-enfant 2</span>
+                                    <span class="member-role">Branche Finance</span>
+                                    <span class="member-metier">Architecture</span>
+                                    <span class="member-mission">Construction des biens ALLAM Immo</span>
+                                </div>
+                            </div>
+                            <div class="tree-member future-member" data-id="11">
+                                <div class="member-avatar">
+                                    <span class="avatar-initials">?</span>
+                                </div>
+                                <div class="member-info">
+                                    <span class="member-name">Arrière-petit-enfant 3</span>
+                                    <span class="member-role">Branche Immobilier</span>
+                                    <span class="member-metier">Droit international</span>
+                                    <span class="member-mission">Protection juridique multi-pays</span>
+                                </div>
+                            </div>
+                            <div class="tree-member future-member" data-id="12">
+                                <div class="member-avatar">
+                                    <span class="avatar-initials">?</span>
+                                </div>
+                                <div class="member-info">
+                                    <span class="member-name">Arrière-petit-enfant 4</span>
+                                    <span class="member-role">Branche Immobilier</span>
+                                    <span class="member-metier">Intelligence Artificielle</span>
+                                    <span class="member-mission">Innovation tech ALLAM</span>
+                                </div>
+                            </div>
+                            <div class="tree-member future-member" data-id="13">
+                                <div class="member-avatar">
+                                    <span class="avatar-initials">?</span>
+                                </div>
+                                <div class="member-info">
+                                    <span class="member-name">Arrière-petit-enfant 5</span>
+                                    <span class="member-role">Branche Tech</span>
+                                    <span class="member-metier">Médecine</span>
+                                    <span class="member-mission">Santé de la dynastie + clinique familiale</span>
+                                </div>
+                            </div>
+                            <div class="tree-member future-member" data-id="14">
+                                <div class="member-avatar">
+                                    <span class="avatar-initials">?</span>
+                                </div>
+                                <div class="member-info">
+                                    <span class="member-name">Arrière-petit-enfant 6</span>
+                                    <span class="member-role">Branche Tech</span>
+                                    <span class="member-metier">Gestion hôtelière</span>
+                                    <span class="member-mission">Diversification : hôtels & résidences ALLAM</span>
+                                </div>
+                            </div>
+                            <div class="tree-member future-member" data-id="15">
+                                <div class="member-avatar">
+                                    <span class="avatar-initials">?</span>
+                                </div>
+                                <div class="member-info">
+                                    <span class="member-name">Arrière-petit-enfant 7</span>
+                                    <span class="member-role">Branche Commerce</span>
+                                    <span class="member-metier">Communication & Marketing</span>
+                                    <span class="member-mission">Image de marque & influence ALLAM</span>
+                                </div>
+                            </div>
+                            <div class="tree-member future-member" data-id="16">
+                                <div class="member-avatar">
+                                    <span class="avatar-initials">?</span>
+                                </div>
+                                <div class="member-info">
+                                    <span class="member-name">Arrière-petit-enfant 8</span>
+                                    <span class="member-role">Branche Commerce</span>
+                                    <span class="member-metier">Diplomatie & Relations internationales</span>
+                                    <span class="member-mission">Réseau politique & influence mondiale</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Member Detail Modal -->
+            <div class="member-modal" id="memberModal">
+                <div class="modal-content">
+                    <button class="modal-close" id="modalClose">&times;</button>
+                    <div class="modal-avatar">
+                        <span class="modal-initials" id="modalInitials">P</span>
+                    </div>
+                    <h3 class="modal-name" id="modalName">Nom du Membre</h3>
+                    <span class="modal-role" id="modalRole">Rôle</span>
+                    <div class="modal-details">
+                        <p class="modal-quote">&laquo; Chaque membre est un pilier de notre dynastie &raquo;</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation vers page suivante -->
+            <div class="page-nav">
+                <a href="histoire.html" class="page-nav-link prev">
+                    <span class="page-nav-label">&larr; Précédent</span>
+                    <span class="page-nav-title">Notre Histoire</span>
+                </a>
+                <a href="charte.html" class="page-nav-link next">
+                    <span class="page-nav-label">Suivant &rarr;</span>
+                    <span class="page-nav-title">Charte Familiale</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-emblem">
+                <img src="logo.png" alt="AWPF">
+            </div>
+            <p class="footer-motto">&laquo; Nous sommes le changement que notre lignée attendait &raquo;</p>
+            <div class="footer-divider">
+                <span class="divider-line"></span>
+                <span class="divider-diamond">&#9830;</span>
+                <span class="divider-line"></span>
+            </div>
+            <p class="footer-copy">Maison AWPF &mdash; Dynastie Familiale</p>
+            <p class="footer-legacy">Un héritage pour l'éternité</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
