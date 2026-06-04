@@ -1,5 +1,5 @@
 /* ===================================
-   AWPF DYNASTY — JAVASCRIPT
+   Groupe Allam DYNASTY — JAVASCRIPT
    =================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
