@@ -1,12 +1,12 @@
 /* ===================================
    Groupe Allam DYNASTY — STYLE PRINCIPAL
-   Couleurs : Bleu Marine & Or
+   Couleurs : Noir & Or
    =================================== */
 
 :root {
-    --navy: #1a2351;
-    --navy-dark: #111a3e;
-    --navy-deeper: #0c1230;
+    --navy: #1a1a1a;
+    --navy-dark: #111111;
+    --navy-deeper: #000000;
     --gold: #c9a84c;
     --gold-light: #e2c872;
     --gold-dark: #a8873a;
@@ -57,7 +57,7 @@ body {
     align-items: center;
     justify-content: space-between;
     padding: 1rem 3rem;
-    background: rgba(17, 26, 62, 0.9);
+    background: rgba(18, 18, 18, 0.9);
     backdrop-filter: blur(15px);
     border-bottom: 1px solid rgba(201, 168, 76, 0.2);
     transition: all 0.4s ease;
@@ -65,7 +65,7 @@ body {
 
 .nav.scrolled {
     padding: 0.6rem 3rem;
-    background: rgba(12, 18, 48, 0.97);
+    background: rgba(0, 0, 0, 0.97);
 }
 
 .nav-logo img {
@@ -153,7 +153,7 @@ body {
 .hero-overlay {
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse at center, rgba(17, 26, 62, 0.6) 0%, rgba(12, 18, 48, 0.9) 70%);
+    background: radial-gradient(ellipse at center, rgba(18, 18, 18, 0.6) 0%, rgba(0, 0, 0, 0.9) 70%);
 }
 
 .hero-content {
@@ -309,7 +309,7 @@ body {
     content: '';
     position: absolute;
     inset: 0;
-    background: rgba(17, 26, 62, 0.4);
+    background: rgba(18, 18, 18, 0.4);
     pointer-events: none;
 }
 
@@ -643,7 +643,7 @@ body {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(12, 18, 48, 0.9);
+    background: rgba(0, 0, 0, 0.9);
     z-index: 2000;
     align-items: center;
     justify-content: center;
@@ -1318,7 +1318,7 @@ body {
     padding: 4rem 0 2rem;
     text-align: center;
     border-top: 1px solid rgba(201, 168, 76, 0.15);
-    background: rgba(12, 18, 48, 0.5);
+    background: rgba(0, 0, 0, 0.5);
 }
 
 .footer-emblem img {
@@ -1720,7 +1720,7 @@ body {
 .page-hero-overlay {
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse at center, rgba(17, 26, 62, 0.7) 0%, rgba(12, 18, 48, 0.95) 70%);
+    background: radial-gradient(ellipse at center, rgba(18, 18, 18, 0.7) 0%, rgba(0, 0, 0, 0.95) 70%);
 }
 
 .page-hero-content {
@@ -2010,7 +2010,7 @@ body {
         top: 100%;
         left: 0;
         right: 0;
-        background: rgba(12, 18, 48, 0.98);
+        background: rgba(0, 0, 0, 0.98);
         flex-direction: column;
         padding: 2rem;
         gap: 1.5rem;
