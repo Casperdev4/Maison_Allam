@@ -1,0 +1,794 @@
+/* ===================================
+   Groupe ALLAM — LIVRE VIRTUEL
+   Page : histoire.html   Moteur : book.js
+   =================================== */
+
+.book-stage {
+    --paper:      #f3ecdd;
+    --ink:        #2b2419;
+    --ink-soft:   #5a4f3d;
+    --ink-faint:  #9a8b70;
+    --ink-gold:   #6b4f14;
+    --leather:    #131313;
+    --turn:       0.9s;
+
+    position: relative;
+    min-height: 100vh;
+    padding: 8.5rem 1.5rem 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.book-glow {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(ellipse 70% 55% at 50% 42%, rgba(201, 168, 76, 0.12) 0%, transparent 70%),
+        radial-gradient(ellipse at center, rgba(10, 10, 10, 0.5) 0%, rgba(0, 0, 0, 0.92) 78%);
+}
+
+/* ===================================
+   CONTENU SOURCE
+   Lisible sans JavaScript, masqué une
+   fois le livre monté par book.js
+   =================================== */
+
+.book-source {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: 1.08rem;
+    line-height: 1.85;
+    color: var(--text-light);
+}
+
+.book-source .src-head {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.book-source h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.3rem;
+    color: var(--gold);
+    letter-spacing: 2px;
+    margin: 3rem 0 1.2rem;
+}
+
+.book-source p {
+    margin-bottom: 1.2rem;
+}
+
+.book-source .src-rules {
+    list-style: none;
+    margin: 1.2rem 0;
+}
+
+.book-source .src-rules li {
+    padding-left: 1.5rem;
+    margin-bottom: 0.9rem;
+    position: relative;
+}
+
+.book-source .src-rules li::before {
+    content: '\25C6';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    color: var(--gold-dark);
+    font-size: 0.6rem;
+}
+
+.book-stage.book-ready .book-source { display: none; }
+.book-stage.book-ready .book-frame  { display: flex; }
+.book-stage.book-ready .book-toolbar { display: flex; }
+.book-stage.book-ready .bk-toc      { display: flex; }
+
+/* ===================================
+   SCENE 3D
+   =================================== */
+
+.book-frame {
+    display: none;
+    position: relative;
+    z-index: 2;
+    justify-content: center;
+    align-items: center;
+    perspective: 2600px;
+    perspective-origin: 50% 46%;
+    cursor: pointer;
+}
+
+.book {
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform var(--turn) cubic-bezier(0.5, 0.05, 0.25, 1);
+    will-change: transform;
+}
+
+.book[data-state="closed"] { transform: translateX(-25%); }
+.book[data-state="end"]    { transform: translateX(25%); }
+.book.single[data-state]   { transform: none; }
+
+.book-leaves {
+    position: absolute;
+    inset: 0;
+    transform-style: preserve-3d;
+}
+
+/* Reliure centrale */
+.book::before {
+    content: '';
+    position: absolute;
+    top: 1.2%;
+    bottom: 1.2%;
+    left: 50%;
+    width: 14px;
+    transform: translateX(-7px);
+    background: linear-gradient(90deg,
+        rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 35%,
+        rgba(0, 0, 0, 0.72) 50%, rgba(0, 0, 0, 0.5) 65%, rgba(0, 0, 0, 0) 100%);
+    z-index: 0;
+    pointer-events: none;
+}
+
+.book.single::before,
+.book[data-state="closed"]::before,
+.book[data-state="end"]::before { display: none; }
+
+.book-shadow {
+    position: absolute;
+    left: 6%;
+    right: 6%;
+    bottom: -26px;
+    height: 44px;
+    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.75) 0%, transparent 72%);
+    filter: blur(9px);
+    pointer-events: none;
+}
+
+/* ===================================
+   FEUILLETS
+   =================================== */
+
+.leaf {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 50%;
+    height: 100%;
+    transform-origin: left center;
+    transform-style: preserve-3d;
+    transition: transform var(--turn) cubic-bezier(0.55, 0.05, 0.25, 1);
+    will-change: transform;
+}
+
+.book.single .leaf {
+    left: 0;
+    width: 100%;
+}
+
+.leaf.flipped { transform: rotateY(-180deg); }
+
+.leaf-face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    overflow: hidden;
+    background: var(--paper);
+    box-shadow: 0 0 18px rgba(0, 0, 0, 0.35);
+}
+
+.leaf-face.back { transform: rotateY(180deg); }
+
+/* Ombre de gouttiere */
+.leaf-face::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.leaf-face.front::after {
+    background: linear-gradient(90deg, rgba(60, 45, 20, 0.3) 0%, rgba(60, 45, 20, 0.07) 5%, transparent 14%);
+}
+
+.leaf-face.back::after {
+    background: linear-gradient(270deg, rgba(60, 45, 20, 0.3) 0%, rgba(60, 45, 20, 0.07) 5%, transparent 14%);
+}
+
+.book.single .leaf-face::after { opacity: 0.25; }
+
+/* ===================================
+   PAGE
+   =================================== */
+
+.pg {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    color: var(--ink);
+    background-color: var(--paper);
+    background-image:
+        radial-gradient(ellipse at 18% 12%, rgba(190, 168, 118, 0.16) 0%, transparent 42%),
+        radial-gradient(ellipse at 82% 78%, rgba(178, 152, 100, 0.14) 0%, transparent 46%),
+        radial-gradient(ellipse at 55% 50%, rgba(255, 252, 244, 0.5) 0%, transparent 62%),
+        linear-gradient(160deg, #f6f0e2 0%, #efe6d3 55%, #e7dcc4 100%);
+}
+
+.pg-inner {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 6% 8% 4%;
+    min-width: 0;
+}
+
+.pg-head {
+    flex: 0 0 auto;
+    font-family: 'Cinzel', serif;
+    font-size: 0.58rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    text-align: center;
+    padding-bottom: 0.9rem;
+    margin-bottom: 1.1rem;
+    border-bottom: 1px solid rgba(120, 100, 60, 0.18);
+    min-height: 1.4em;
+}
+
+.pg-body {
+    flex: 1 1 auto;
+    overflow: hidden;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(0.9rem, 1.55vh, 1.12rem);
+    line-height: 1.72;
+    text-align: justify;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+}
+
+.pg-body p { margin-bottom: 0.85em; }
+.pg-body p:last-child { margin-bottom: 0; }
+.pg-body strong { color: var(--ink-gold); font-weight: 600; }
+.pg-body sup { font-size: 0.7em; }
+
+.pg-body .lead {
+    font-size: 1.14em;
+    color: #1f1a12;
+}
+
+.pg-body .pull {
+    text-align: center;
+    font-style: italic;
+    font-size: 1.08em;
+    color: var(--ink-gold);
+    margin: 1.1em 0;
+}
+
+.pg-body .src-rules { list-style: none; }
+
+.pg-body .src-rules li {
+    position: relative;
+    padding-left: 1.2em;
+    margin-bottom: 0.7em;
+    text-align: left;
+}
+
+.pg-body .src-rules li::before {
+    content: '\25C6';
+    position: absolute;
+    left: 0;
+    top: 0.5em;
+    font-size: 0.45em;
+    color: var(--gold-dark);
+}
+
+/* Lettrine : premiere page de chaque chapitre.
+   Exclut le journal et la lettre, dont la premiere ligne est une date
+   ou une formule d'adresse — une lettrine y serait deplacee. */
+.pg-body.has-drop:not(.journal):not(.letter) > p:first-child::first-letter {
+    float: left;
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 3.4em;
+    line-height: 0.82;
+    padding: 0.06em 0.12em 0 0;
+    color: var(--gold-dark);
+}
+
+.pg-foot {
+    flex: 0 0 auto;
+    padding-top: 0.9rem;
+    text-align: center;
+}
+
+.pg-num {
+    font-family: 'Cinzel', serif;
+    font-size: 0.62rem;
+    letter-spacing: 2px;
+    color: var(--ink-faint);
+}
+
+.pg-num:not(:empty)::before { content: '\2014\00a0'; }
+.pg-num:not(:empty)::after  { content: '\00a0\2014'; }
+
+/* ===================================
+   LETTRE (epilogue)
+   =================================== */
+
+.pg-body.letter { font-style: italic; text-align: left; }
+.pg-body.letter strong { font-style: normal; }
+.pg-body.letter .salut { font-size: 1.1em; margin-bottom: 1.2em; }
+.pg-body.letter .sign-off { margin-top: 1.4em; }
+
+.pg-body.letter .sign-name {
+    font-family: 'Cinzel', serif;
+    font-style: normal;
+    font-size: 1.05em;
+    color: var(--ink-gold);
+    margin-bottom: 0.1em;
+}
+
+.pg-body.letter .sign-role {
+    font-family: 'Cinzel', serif;
+    font-style: normal;
+    font-size: 0.62em;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+}
+
+/* ===================================
+   JOURNAL
+   =================================== */
+
+.pg-body.journal .entry-date {
+    position: relative;
+    font-family: 'Cinzel', serif;
+    font-size: 0.7em;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-align: center;
+    color: var(--gold-dark);
+    margin: 0.4em 0 1.4em;
+}
+
+.pg-body.journal .entry-date::before,
+.pg-body.journal .entry-date::after {
+    content: '\25C6';
+    font-size: 0.6em;
+    vertical-align: 0.25em;
+    color: rgba(160, 132, 62, 0.55);
+    margin: 0 0.9em;
+}
+
+.pg-body.journal .entry-sign {
+    margin-top: 1.2em;
+    font-style: italic;
+    text-align: center;
+    color: var(--ink-gold);
+}
+
+/* ===================================
+   OUVERTURE DE CHAPITRE
+   =================================== */
+
+.pg-opener .pg-inner {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 10%;
+}
+
+.op-num {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(2.6rem, 7vh, 4.6rem);
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--gold-dark);
+    letter-spacing: 4px;
+}
+
+.op-rule {
+    position: relative;
+    width: 60%;
+    max-width: 200px;
+    height: 1px;
+    margin: 1.4rem 0;
+    background: linear-gradient(90deg, transparent, var(--gold-dark), transparent);
+}
+
+.op-rule::after {
+    content: '\25C6';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.5rem;
+    color: var(--gold-dark);
+    background: #f1e9d8;
+    padding: 0 0.5rem;
+}
+
+.op-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1rem, 2.6vh, 1.6rem);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #4a3a15;
+    line-height: 1.4;
+}
+
+.op-epi {
+    margin-top: 1.6rem;
+    font-style: italic;
+    font-size: clamp(0.78rem, 1.5vh, 1rem);
+    color: var(--ink-soft);
+    max-width: 26ch;
+    line-height: 1.6;
+}
+
+/* ===================================
+   COUVERTURE & GARDES
+   =================================== */
+
+.pg-cover,
+.pg-endpaper {
+    background-color: var(--leather);
+    background-image: radial-gradient(ellipse at 50% 0%, #262626 0%, #141414 52%, #070707 100%);
+    color: var(--cream);
+}
+
+.pg-cover .pg-inner,
+.pg-endpaper .pg-inner {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 8%;
+}
+
+.pg-cover::before {
+    content: '';
+    position: absolute;
+    inset: 5%;
+    border: 1px solid rgba(201, 168, 76, 0.5);
+    box-shadow:
+        inset 0 0 0 4px rgba(0, 0, 0, 0.4),
+        inset 0 0 0 5px rgba(201, 168, 76, 0.28),
+        inset 0 0 40px rgba(0, 0, 0, 0.6);
+    pointer-events: none;
+    z-index: 2;
+}
+
+.cover-crest {
+    font-size: clamp(1rem, 2.4vh, 1.5rem);
+    color: var(--gold);
+    letter-spacing: 6px;
+    margin-bottom: 1.2rem;
+}
+
+.cover-house {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(0.6rem, 1.4vh, 0.8rem);
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+}
+
+.cover-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(1.7rem, 5.2vh, 3.2rem);
+    line-height: 1.15;
+    letter-spacing: 3px;
+    margin: 1.4rem 0;
+    color: var(--gold);
+    background: linear-gradient(180deg, #f0dda0 0%, #c9a84c 45%, #8a6d22 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.cover-rule {
+    width: 55%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-dark), transparent);
+}
+
+.cover-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(0.75rem, 1.7vh, 1.05rem);
+    color: var(--text-light);
+    margin: 1.4rem 0 2rem;
+    max-width: 28ch;
+    line-height: 1.6;
+}
+
+.cover-vol {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(0.52rem, 1.2vh, 0.68rem);
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.endpaper-mark {
+    font-size: clamp(3rem, 12vh, 7rem);
+    color: rgba(201, 168, 76, 0.1);
+    line-height: 1;
+}
+
+.endpaper-motto {
+    margin-top: 2rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(0.75rem, 1.6vh, 1rem);
+    color: rgba(201, 168, 76, 0.4);
+    max-width: 26ch;
+    line-height: 1.7;
+}
+
+/* ===================================
+   PAGE DE TITRE
+   =================================== */
+
+/* Page de respiration entre deux chapitres */
+.pg-filler .pg-inner {
+    align-items: center;
+    justify-content: center;
+}
+
+.filler-mark {
+    font-size: clamp(0.6rem, 1.4vh, 0.85rem);
+    letter-spacing: 12px;
+    text-indent: 12px;
+    color: rgba(160, 132, 62, 0.35);
+}
+
+.filler-mark::before,
+.filler-mark::after { content: '\25C6\00a0'; }
+
+.pg-title .pg-inner,
+.pg-end .pg-inner {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.tp-house {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(0.55rem, 1.3vh, 0.72rem);
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+}
+
+.tp-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(1.5rem, 4.4vh, 2.6rem);
+    color: #4a3a15;
+    letter-spacing: 2px;
+    margin: 1rem 0;
+    line-height: 1.2;
+}
+
+.tp-sub {
+    font-style: italic;
+    font-size: clamp(0.78rem, 1.6vh, 1rem);
+    color: var(--ink-soft);
+    max-width: 30ch;
+    line-height: 1.6;
+    margin-bottom: 1.8rem;
+}
+
+.tp-stats {
+    display: flex;
+    gap: clamp(0.8rem, 3vh, 2rem);
+}
+
+.tp-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+}
+
+.tp-stat b {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(1.1rem, 3vh, 1.8rem);
+    color: var(--gold-dark);
+    font-weight: 400;
+}
+
+.tp-stat span {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(0.42rem, 1vh, 0.56rem);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    text-align: center;
+    max-width: 11ch;
+    line-height: 1.4;
+}
+
+.end-mark {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(1.1rem, 3vh, 1.7rem);
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    color: #4a3a15;
+}
+
+.end-note {
+    margin-top: 1.4rem;
+    font-style: italic;
+    font-size: clamp(0.75rem, 1.6vh, 0.98rem);
+    color: var(--ink-soft);
+    max-width: 28ch;
+    line-height: 1.7;
+}
+
+/* ===================================
+   COMMANDES
+   =================================== */
+
+.book-toolbar {
+    display: none;
+    position: relative;
+    z-index: 3;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 3rem;
+    max-width: 100%;
+}
+
+.bk-btn {
+    flex: 0 0 auto;
+    width: 46px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(201, 168, 76, 0.05);
+    border: 1px solid rgba(201, 168, 76, 0.28);
+    border-radius: 50%;
+    color: var(--gold);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.7rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.bk-btn:hover:not(:disabled) {
+    background: rgba(201, 168, 76, 0.16);
+    border-color: var(--gold);
+    transform: scale(1.08);
+}
+
+.bk-btn:disabled { opacity: 0.22; cursor: default; }
+
+.bk-meter {
+    width: min(340px, 52vw);
+    text-align: center;
+}
+
+.bk-progress {
+    height: 1px;
+    background: rgba(201, 168, 76, 0.18);
+    overflow: hidden;
+}
+
+.bk-progress span {
+    display: block;
+    width: 0;
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold-dark), var(--gold-light));
+    transition: width 0.5s ease;
+}
+
+.bk-count {
+    margin-top: 0.7rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+/* ===================================
+   SOMMAIRE
+   =================================== */
+
+.bk-toc {
+    display: none;
+    position: relative;
+    z-index: 3;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1.8rem;
+    /* Élément flex : sans le 100% il prendrait 780px même sur un écran
+       plus étroit et les puces seraient rognées au lieu de passer à la ligne. */
+    max-width: min(780px, 100%);
+}
+
+.bk-chip {
+    background: none;
+    border: 1px solid rgba(201, 168, 76, 0.2);
+    color: var(--text-muted);
+    font-family: 'Cinzel', serif;
+    font-size: 0.58rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 0.45rem 0.85rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.bk-chip:hover {
+    border-color: rgba(201, 168, 76, 0.5);
+    color: var(--gold-light);
+}
+
+.bk-chip.current {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: rgba(201, 168, 76, 0.08);
+}
+
+.bk-hint {
+    position: relative;
+    z-index: 3;
+    margin-top: 1.4rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.55rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+
+.book-ready .bk-hint { opacity: 0.75; }
+.book-ready.turned .bk-hint { opacity: 0; }
+
+/* Rig de mesure invisible */
+.bk-measure {
+    position: absolute;
+    left: -99999px;
+    top: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* ===================================
+   RESPONSIVE
+   =================================== */
+
+@media (max-width: 820px) {
+    .book-stage { min-height: auto; padding: 7rem 1rem 3rem; }
+    .book-toolbar { gap: 0.9rem; margin-top: 2rem; }
+    .bk-btn { width: 40px; height: 40px; font-size: 1.4rem; }
+    .bk-meter { width: min(340px, 45vw); }
+    .bk-toc { margin-top: 1.2rem; gap: 0.35rem; }
+    .bk-chip { font-size: 0.5rem; padding: 0.35rem 0.6rem; letter-spacing: 1px; }
+    .pg-inner { padding: 7% 8% 4%; }
+    .pg-head { font-size: 0.52rem; letter-spacing: 2px; }
+    .book-shadow { bottom: -18px; height: 30px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .book,
+    .leaf { transition-duration: 0.01ms; }
+}

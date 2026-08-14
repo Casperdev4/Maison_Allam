@@ -8,6 +8,7 @@
     <link rel="icon" type="image/png" href="favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Cinzel:wght@400;500;600;700&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="book.css">
 </head>
 <body>
 
@@ -16,7 +17,7 @@
         <div class="nav-logo">
             <a href="index.html"><img src="maison_allam.png" alt="Groupe ALLAM"></a>
         </div>
-        <button class="nav-toggle" id="navToggle" aria-label="Menu">
+        <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false" aria-controls="navLinks">
             <span></span><span></span><span></span>
         </button>
         <ul class="nav-links" id="navLinks">
@@ -28,178 +29,167 @@
         </ul>
     </nav>
 
-    <!-- Page Header -->
-    <section class="page-hero">
-        <div class="page-hero-overlay"></div>
-        <div class="page-hero-content">
-            <span class="section-label">Chapitre I</span>
-            <h1 class="section-title">Notre Histoire</h1>
-            <div class="title-ornament">
-                <span class="ornament-line"></span>
-                <span class="ornament-symbol">&#9830;</span>
-                <span class="ornament-line"></span>
+    <!-- ===================================================
+         LE LIVRE
+         =================================================== -->
+    <section class="book-stage" id="bookStage">
+
+        <div class="book-glow" aria-hidden="true"></div>
+
+        <!-- Rendu par book.js -->
+        <div class="book-frame" id="bookFrame" aria-hidden="true">
+            <div class="book" id="book" data-state="closed">
+                <div class="book-leaves" id="bookLeaves"></div>
             </div>
-            <p class="section-subtitle">D'une cité de l'Essonne à la fondation d'un empire</p>
+            <div class="book-shadow"></div>
         </div>
-    </section>
 
-    <!-- Introduction -->
-    <section class="section section-histoire">
-        <div class="container">
-            <div class="histoire-content">
-                <div class="histoire-text">
-                    <p class="histoire-intro">Cette histoire n'est pas celle d'un homme qui a tout reçu. C'est celle d'un homme qui n'avait <strong>rien</strong> — et qui a décidé que ses enfants auraient <strong>tout</strong>.</p>
-                    <p>Bilal ALLAM est né le 26 avril 1994 à Juvisy-sur-Orge, dans l'Essonne. Père d'origine oranaise, mère française. Plus tard, il rencontrera Alicia, d'origine kabyle — deux familles algériennes, Oran et Kabylie, réunies en France. Parents divorcés, remariés, absents. Cinq enfants en cité. Pas de modèle, pas d'argent, pas de diplôme. Diagnostiqué TSA (Trouble du Spectre de l'Autisme) — syndrome d'Asperger. Une tentative de suicide à 21 ans.</p>
-                    <p>Profil atypique : <strong>timide, calme, peu bavard, froid en apparence — mais d'une générosité immense pour les siens</strong>. Impulsif aussi, parfois. À côté du TSA Asperger, le diagnostic d'<strong>HPI</strong> (Haut Potentiel Intellectuel) confirme un QI élevé. Le revers : des épisodes dépressifs courts mais récurrents, et un traitement quotidien pour les TOC et les troubles liés au TSA. Bâtir un empire avec ce cerveau-là, ce n'est pas un avantage — c'est un combat permanent.</p>
-                    <p>Et malgré tout ça — ou peut-être grâce à tout ça — il a choisi de se relever. De se battre. De construire.</p>
-                    <p><strong>Nous sommes le changement que notre lignée attendait.</strong></p>
-                </div>
-                <div class="histoire-stats">
-                    <div class="stat-card">
-                        <span class="stat-icon">&#9813;</span>
-                        <span class="stat-number">2</span>
-                        <span class="stat-label">Générations</span>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-icon">&#9829;</span>
-                        <span class="stat-number">3</span>
-                        <span class="stat-label">Membres</span>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-icon">&#9881;</span>
-                        <span class="stat-number">4</span>
-                        <span class="stat-label">Entreprises Groupe Allam</span>
-                    </div>
-                </div>
+        <!-- Commandes -->
+        <div class="book-toolbar" id="bookToolbar" aria-hidden="true">
+            <button class="bk-btn" id="bkPrev" aria-label="Page précédente">&#8249;</button>
+            <div class="bk-meter">
+                <div class="bk-progress"><span id="bkBar"></span></div>
+                <div class="bk-count" id="bkCount">Couverture</div>
             </div>
+            <button class="bk-btn" id="bkNext" aria-label="Page suivante">&#8250;</button>
+        </div>
 
-            <!-- Chapitre I — Les Origines -->
-            <div class="histoire-chapitre">
-                <div class="chapitre-header">
-                    <div class="chapitre-number">I</div>
-                    <h3 class="chapitre-title">Les Origines</h3>
+        <nav class="bk-toc" id="bkToc" aria-label="Sommaire" aria-hidden="true"></nav>
+
+        <p class="bk-hint" id="bkHint">Cliquez sur le livre &mdash; ou utilisez &larr; &rarr;</p>
+
+        <!-- ===================================================
+             SOURCE DU LIVRE
+             Contenu lisible sans JavaScript ; masqué et
+             repaginé par book.js quand le livre est prêt.
+             =================================================== -->
+        <article class="book-source" id="bookSource">
+
+            <header class="src-head">
+                <span class="section-label">Livre Premier</span>
+                <h1 class="section-title">Notre Histoire</h1>
+                <div class="title-ornament">
+                    <span class="ornament-line"></span>
+                    <span class="ornament-symbol">&#9830;</span>
+                    <span class="ornament-line"></span>
                 </div>
+                <p class="section-subtitle">D'une cité de l'Essonne à la fondation d'un empire</p>
+            </header>
+
+            <section class="chap" data-num="" data-title="Ouverture" data-epi="Nous sommes le changement que notre lignée attendait">
+                <h2>Ouverture</h2>
+                <p class="lead">Cette histoire n'est pas celle d'un homme qui a tout reçu. C'est celle d'un homme qui n'avait <strong>rien</strong> &mdash; et qui a décidé que ses enfants auraient <strong>tout</strong>.</p>
+                <p>Bilal ALLAM est né le 26 avril 1994 à Juvisy-sur-Orge, dans l'Essonne. Père d'origine oranaise, mère française. Plus tard, il rencontrera Alicia, d'origine kabyle &mdash; deux familles algériennes, Oran et Kabylie, réunies en France. Parents divorcés, remariés, absents. Cinq enfants en cité. Pas de modèle, pas d'argent, pas de diplôme. Diagnostiqué TSA (Trouble du Spectre de l'Autisme) &mdash; syndrome d'Asperger. Une tentative de suicide à 21 ans.</p>
+                <p>Profil atypique : <strong>timide, calme, peu bavard, froid en apparence &mdash; mais d'une générosité immense pour les siens</strong>. Impulsif aussi, parfois. À côté du TSA Asperger, le diagnostic d'<strong>HPI</strong> (Haut Potentiel Intellectuel) confirme un QI élevé. Le revers : des épisodes dépressifs courts mais récurrents, et un traitement quotidien pour les TOC et les troubles liés au TSA. Bâtir un empire avec ce cerveau-là, ce n'est pas un avantage &mdash; c'est un combat permanent.</p>
+                <p>Et malgré tout ça &mdash; ou peut-être grâce à tout ça &mdash; il a choisi de se relever. De se battre. De construire.</p>
+                <p class="pull"><strong>Nous sommes le changement que notre lignée attendait.</strong></p>
+            </section>
+
+            <section class="chap" data-num="I" data-title="Les Origines" data-epi="Rien. C'est de là que tout commence.">
+                <h2>I &mdash; Les Origines</h2>
                 <p>Bilal grandit dans une cité de l'Essonne. Son père, bagagiste d'origine oranaise, quitte le foyer pour une autre femme. Sa mère, atteinte d'un autisme non diagnostiqué, vit sous médicaments, incapable d'être présente. Cinq enfants livrés à eux-mêmes : Cindy, Mehdi, Bilal, Zinedine et Loana. Mehdi et Bilal sont frères de sang, les autres sont des demi-frères et soeurs.</p>
-                <p style="margin-top: 1rem;">Pas de père pour montrer le chemin. Pas de mère pour rassurer. Pas d'argent. Pas de réseau. Pas de diplôme — Bilal quitte l'école en 3ème. La seule chose qu'il possède, c'est une rage silencieuse de s'en sortir.</p>
-            </div>
+                <p>Pas de père pour montrer le chemin. Pas de mère pour rassurer. Pas d'argent. Pas de réseau. Pas de diplôme &mdash; Bilal quitte l'école en 3<sup>ème</sup>. La seule chose qu'il possède, c'est une rage silencieuse de s'en sortir.</p>
+            </section>
 
-            <!-- Chapitre II — La Chute et la Renaissance -->
-            <div class="histoire-chapitre">
-                <div class="chapitre-header">
-                    <div class="chapitre-number">II</div>
-                    <h3 class="chapitre-title">La Chute et la Renaissance</h3>
-                </div>
+            <section class="chap" data-num="II" data-title="La Chute et la Renaissance" data-epi="Le point le plus bas fut aussi le tournant.">
+                <h2>II &mdash; La Chute et la Renaissance</h2>
                 <p>À 21 ans, la pression devient insupportable. Bilal tente de mettre fin à ses jours. C'est le point le plus bas. Mais c'est aussi le tournant. Dans cette période où il ne voit plus l'intérêt de vivre, il se rapproche de l'Islam. La foi lui donne ce que personne ne lui a jamais donné : un sens, une direction, une raison de se battre. Allah lui montre que sa vie a un but. Deux ans plus tard, à 23 ans, il décide de reprendre sa vie en main. Totalement. Sans excuses. Avec Dieu comme fondation.</p>
-                <p style="margin-top: 1rem;">Le premier boulot vient grâce à Alicia, qui dépose son CV partout : distributeur de publicités dans les boîtes aux lettres chez Mediapost en semaine. Le weekend, il rejoint son petit frère Zinedine sur les marchés pour vendre du linge de maison. Chez Mediapost, il devient manutentionnaire, puis pilote de ligne de production pour le tri et l'envoi des prospectus, puis chef d'équipe.</p>
-                <p style="margin-top: 1rem;">Mais le salariat n'est pas pour lui. Son TSA Asperger rend la sociabilité imposée invivable, et il ne supporte pas de recevoir des ordres. Plusieurs tentatives de reconversion tournent court : deux jours en blanchisserie, deux jours comme préparateur de commandes, un mois dans l'assainissement. À chaque fois, il quitte. Le constat est clair : il est fait pour bâtir, pas pour obéir.</p>
-            </div>
+                <p>Le premier boulot vient grâce à Alicia, qui dépose son CV partout : distributeur de publicités dans les boîtes aux lettres chez Mediapost en semaine. Le weekend, il rejoint son petit frère Zinedine sur les marchés pour vendre du linge de maison. Chez Mediapost, il devient manutentionnaire, puis pilote de ligne de production pour le tri et l'envoi des prospectus, puis chef d'équipe.</p>
+                <p>Mais le salariat n'est pas pour lui. Son TSA Asperger rend la sociabilité imposée invivable, et il ne supporte pas de recevoir des ordres. Plusieurs tentatives de reconversion tournent court : deux jours en blanchisserie, deux jours comme préparateur de commandes, un mois dans l'assainissement. À chaque fois, il quitte. Le constat est clair : il est fait pour bâtir, pas pour obéir.</p>
+            </section>
 
-            <!-- Chapitre III — L'Ascension -->
-            <div class="histoire-chapitre">
-                <div class="chapitre-header">
-                    <div class="chapitre-number">III</div>
-                    <h3 class="chapitre-title">L'Ascension</h3>
-                </div>
-                <p>Bilal réunit ses économies et ouvre un restaurant de burgers à Vitry-sur-Seine. Acheté <strong>14 000 €</strong>, revendu <strong>28 000 €</strong> six mois plus tard. Dans la foulée, Bilal et Alicia se marient — religieusement puis civilement. Sans projet clair pour la suite, Bilal envisage de reprendre les études pour au moins décrocher le Bac. C'est Alicia qui change tout en lui offrant un ordinateur. Décidé à rentabiliser ce cadeau, il cherche quel business monter avec un PC — et tombe sur le <strong>trading</strong>.</p>
-                <p style="margin-top: 1rem;">Il apprend d'abord en autodidacte : les pertes dépassent largement les gains. Refusant d'abandonner, il part suivre une formation intensive de <strong>deux mois à La Défense</strong> — et termine <strong>major de promo</strong>. À partir de là, il se spécialise dans le <strong>trading scalping</strong>, construit sa méthode, rattrape ses pertes et commence à en vivre. Alicia n'a jamais douté.</p>
-                <p style="margin-top: 1rem;">C'est dans un centre spécialisé pour personnes RQTH (Reconnaissance de la Qualité de Travailleur Handicapé) qu'il découvre le métier de développeur web. Révélation immédiate, passion totale. Il apprend en autodidacte à la maison, puis à 30 ans passe son titre RNCP Développeur Web et Web Mobile (DWWM) — non pas pour apprendre, mais pour décrocher le diplôme. Il sait déjà créer des sites qui arrivent en première page Google — sachant que seuls 10% des sites y parviennent.</p>
-                <p style="margin-top: 1rem;"><strong>WebPrime</strong> naît pendant cette formation. En parallèle, Bilal reprend ses études dans la <strong>cybersécurité</strong> — domaine d'avenir et passion dévorante : titre RNCP Administrateur d'Infrastructure Sécurisée, puis Ingénieur Cybersécurité, jusqu'au <strong>Bac+5</strong>. Avant même d'avoir décroché le diplôme, <strong>Privora</strong> est déjà créée — parce que Bilal apprend en faisant, toujours.</p>
-                <p style="margin-top: 1rem;">L'argent généré par <strong>WebPrime</strong> devient le carburant de la suite : il sert à investir dans l'immobilier, donnant naissance à <strong>ALLAM Immo</strong>. En se privant de tout, Bilal et Alicia achètent leurs premiers biens : un studio à crédit mis en location, deux bureaux cash, puis un studio et un bureau à crédit. Toujours dans le 91. Ensemble, ils fondent la <strong>SCI ALLAM Immo</strong>. Cinq biens : trois bureaux, deux studios. Partis de zéro.</p>
-            </div>
+            <section class="chap" data-num="III" data-title="L'Ascension" data-epi="Il est fait pour bâtir, pas pour obéir.">
+                <h2>III &mdash; L'Ascension</h2>
+                <p>Bilal réunit ses économies et ouvre un restaurant de burgers à Vitry-sur-Seine. Acheté <strong>14 000 &euro;</strong>, revendu <strong>28 000 &euro;</strong> six mois plus tard. Dans la foulée, Bilal et Alicia se marient &mdash; religieusement puis civilement. Sans projet clair pour la suite, Bilal envisage de reprendre les études pour au moins décrocher le Bac. C'est Alicia qui change tout en lui offrant un ordinateur. Décidé à rentabiliser ce cadeau, il cherche quel business monter avec un PC &mdash; et tombe sur le <strong>trading</strong>.</p>
+                <p>Il apprend d'abord en autodidacte : les pertes dépassent largement les gains. Refusant d'abandonner, il part suivre une formation intensive de <strong>deux mois à La Défense</strong> &mdash; et termine <strong>major de promo</strong>. À partir de là, il se spécialise dans le <strong>trading scalping</strong>, construit sa méthode, rattrape ses pertes et commence à en vivre. Alicia n'a jamais douté.</p>
+                <p>C'est dans un centre spécialisé pour personnes RQTH (Reconnaissance de la Qualité de Travailleur Handicapé) qu'il découvre le métier de développeur web. Révélation immédiate, passion totale. Il apprend en autodidacte à la maison, puis à 30 ans passe son titre RNCP Développeur Web et Web Mobile (DWWM) &mdash; non pas pour apprendre, mais pour décrocher le diplôme. Il sait déjà créer des sites qui arrivent en première page Google &mdash; sachant que seuls 10% des sites y parviennent.</p>
+                <p><strong>WebPrime</strong> naît pendant cette formation. En parallèle, Bilal reprend ses études dans la <strong>cybersécurité</strong> &mdash; domaine d'avenir et passion dévorante : titre RNCP Administrateur d'Infrastructure Sécurisée, puis Ingénieur Cybersécurité, jusqu'au <strong>Bac+5</strong>. Là encore, il pratique bien avant d'avoir le papier &mdash; parce que Bilal apprend en faisant, toujours.</p>
+                <p>L'argent généré par <strong>WebPrime</strong> devient le carburant de la suite : il sert à investir dans l'immobilier, donnant naissance à <strong>ALLAM Immo</strong>. En se privant de tout, Bilal et Alicia achètent leurs premiers biens : un studio à crédit mis en location, deux bureaux cash, puis un T2 à crédit. Toujours dans le 91. Ensemble, ils fondent la <strong>SCI ALLAM Immo</strong>. Quatre biens : deux bureaux, un studio, un T2. Partis de zéro.</p>
+            </section>
 
-            <!-- Chapitre IV — Alicia -->
-            <div class="histoire-chapitre">
-                <div class="chapitre-header">
-                    <div class="chapitre-number">IV</div>
-                    <h3 class="chapitre-title">Alicia</h3>
-                </div>
-                <p>L'histoire d'Alicia et Bilal commence au lycée — les trois mois de seconde que Bilal a faits avant de quitter l'école. Coup de foudre immédiat. Il la drague, elle refuse. Il insiste. Elle refuse encore. Il ne lâche rien. Des années plus tard, elle dit oui. Depuis ce jour, ils ne se sont jamais quittés. Le seul amour de sa vie, et inversement. Pas d'avant, pas d'autre. Juste eux deux, depuis le début.</p>
-                <p style="margin-top: 1rem;">Alicia a toujours été là. Tout le temps. Dans les moments les plus durs, quand personne n'y croyait, quand tout semblait impossible — elle n'a jamais lâché. Elle est devenue formatrice chez BNP Paribas Cardif Assurance. Solide, structurée, patiente, loyale — le pilier que Bilal n'a jamais eu dans son enfance. Ensemble, ils se marient religieusement et civilement. Elle n'est pas juste la femme de Bilal. Elle est la co-fondatrice de tout ce qui existe. Sans elle, rien de tout ça ne serait possible.</p>
-            </div>
+            <section class="chap" data-num="IV" data-title="Alicia" data-epi="Elle n'a jamais douté.">
+                <h2>IV &mdash; Alicia</h2>
+                <p>L'histoire d'Alicia et Bilal commence au lycée &mdash; les trois mois de seconde que Bilal a faits avant de quitter l'école. Coup de foudre immédiat. Il la drague, elle refuse. Il insiste. Elle refuse encore. Il ne lâche rien. Des années plus tard, elle dit oui. Depuis ce jour, ils ne se sont jamais quittés. Le seul amour de sa vie, et inversement. Pas d'avant, pas d'autre. Juste eux deux, depuis le début.</p>
+                <p>Alicia a toujours été là. Tout le temps. Dans les moments les plus durs, quand personne n'y croyait, quand tout semblait impossible &mdash; elle n'a jamais lâché. Elle est devenue formatrice chez BNP Paribas Cardif Assurance. Solide, structurée, patiente, loyale &mdash; le pilier que Bilal n'a jamais eu dans son enfance. Ensemble, ils se marient religieusement et civilement. Elle n'est pas juste la femme de Bilal. Elle est la co-fondatrice de tout ce qui existe. Sans elle, rien de tout ça ne serait possible.</p>
+            </section>
 
-            <!-- Chapitre V — Dahlia et le Déclic -->
-            <div class="histoire-chapitre">
-                <div class="chapitre-header">
-                    <div class="chapitre-number">V</div>
-                    <h3 class="chapitre-title">Dahlia — Le Déclic</h3>
-                </div>
+            <section class="chap" data-num="V" data-title="Dahlia" data-epi="Ce jour-là, il ne construit plus pour lui.">
+                <h2>V &mdash; Dahlia : le Déclic</h2>
                 <p>Tout change avec la naissance de <strong>Dahlia ALLAM</strong>, la première héritière. Ce jour-là, Bilal ne construit plus pour lui. Il construit pour elle. Pour ses frères et soeurs à venir. Pour leurs enfants. Pour une lignée entière qui n'existe pas encore.</p>
-                <p style="margin-top: 1rem;">C'est le moment où le projet devient une <strong>dynastie</strong>. L'idée de la Charte, de la Holding, de l'empire Groupe Allam — tout part de là. Dahlia, qui aspire déjà à devenir psychiatre, incarne l'avenir du Groupe ALLAM.</p>
-            </div>
+                <p>Et un deuxième enfant est déjà en route : <strong>Malik ALLAM</strong>. Une raison de plus de ne jamais reculer. La famille n'est plus un projet : elle est là, vivante, et elle attend qu'on lui bâtisse un monde.</p>
+                <p>C'est le moment où le projet devient une <strong>dynastie</strong>. L'idée de la Charte, de la Holding, de l'empire Groupe Allam &mdash; tout part de là. Dahlia, qui aspire déjà à devenir psychiatre, incarne l'avenir du Groupe ALLAM.</p>
+            </section>
 
-            <!-- Chapitre VI — Groupe Allam -->
-            <div class="histoire-chapitre">
-                <div class="chapitre-header">
-                    <div class="chapitre-number">VI</div>
-                    <h3 class="chapitre-title">L'Empire Groupe Allam</h3>
-                </div>
-                <p>Quatre piliers, quatre lettres, un seul objectif :</p>
-                <ul class="article-rules" style="margin-top: 1rem;">
-                    <li><strong>A — ALLAM Immo :</strong> Le patrimoine immobilier. 4 biens et ce n'est que le début. Chaque euro disponible finit ici</li>
-                    <li><strong>W — WebPrime :</strong> La base des revenus. Sites web en première page Google. Appris seul, maîtrisé avant le diplôme</li>
-                    <li><strong>P — Privora :</strong> La cybersécurité. La passion et le métier de Bilal. Créé avant même la fin de la formation Bac+5</li>
-                    <li><strong>F — Fondation Allam :</strong> Le plus haut niveau du Paradis. L'association humanitaire de la famille. 30 colis alimentaires distribués chaque mois à des familles en hôtel social. 2 puits de village en Afrique, 300 personnes par puits</li>
+            <section class="chap" data-num="VI" data-title="L'Empire Groupe Allam" data-epi="Quatre piliers, un seul objectif.">
+                <h2>VI &mdash; L'Empire Groupe Allam</h2>
+                <p>Quatre piliers, un seul objectif :</p>
+                <ul class="src-rules">
+                    <li><strong>ALLAM Immo :</strong> Le patrimoine immobilier. 4 biens &mdash; deux bureaux, un studio, un T2 &mdash; et ce n'est que le début. Chaque euro disponible finit ici.</li>
+                    <li><strong>Daelia Partners :</strong> La base des revenus, née sous le nom de WebPrime. Sites web en première page Google. Appris seul, maîtrisé avant le diplôme.</li>
+                    <li><strong>WayZo :</strong> En cours de développement : une application mobile de marketplace d'échange de courses entre chauffeurs privés. Un concept unique &mdash; aucune application similaire n'existe sur le marché.</li>
+                    <li><strong>Fondation Allam :</strong> Le plus haut niveau du Paradis. L'association humanitaire de la famille. 30 colis alimentaires distribués chaque mois à des familles en hôtel social. 2 puits de village en Afrique, 300 personnes par puits.</li>
                 </ul>
-                <p style="margin-top: 1rem;">Et en cours de développement, sous le pôle <strong>WebPrime</strong> : <strong>WayZo</strong>, une application mobile de marketplace d'échange de courses entre chauffeurs. Un concept unique — aucune application similaire n'existe sur le marché.</p>
-            </div>
+            </section>
 
-            <!-- Chapitre VII — Le Changement -->
-            <div class="histoire-chapitre">
-                <div class="chapitre-header">
-                    <div class="chapitre-number">VII</div>
-                    <h3 class="chapitre-title">Le Changement</h3>
-                </div>
-                <p>Le <strong>8 juin 2026</strong>, la famille ALLAM quitte la France et s'installe à Valencia, en Espagne — pour le bien-être de Dahlia, de Malik et des futurs enfants. La France est devenue trop difficile à vivre et n'offre plus aucune sécurité. Valencia, c'est le cadre serein, sûr et lumineux que la dynastie mérite.</p>
-                <p style="margin-top: 1rem;">Le Groupe Allam (SAS) sera le véhicule central de la dynastie. La Charte Familiale — 11 titres, plus de 40 articles — est le code de gouvernance qui guidera chaque génération. L'arbre généalogique est tracé jusqu'à la 4ème génération, avec les métiers stratégiques déjà définis.</p>
-                <p style="margin-top: 1rem;">D'une cité de l'Essonne à un empire multigénérationnel. D'un gamin sans diplôme à un Bac+5 en cybersécurité. D'un studio à crédit à une SCI de 4 biens. D'un homme seul à une dynastie.</p>
-            </div>
+            <section class="chap" data-num="VII" data-title="Le Changement" data-epi="D'un homme seul à une dynastie.">
+                <h2>VII &mdash; Le Changement</h2>
+                <p>Le <strong>8 juin 2026</strong>, la famille ALLAM quitte la France et s'installe à Valencia, en Espagne &mdash; pour le bien-être de Dahlia et des enfants à venir. La France est devenue trop difficile à vivre et n'offre plus aucune sécurité. Valencia, c'est le cadre serein, sûr et lumineux que la dynastie mérite.</p>
+                <p>Le Groupe Allam (SAS) sera le véhicule central de la dynastie. La Charte Familiale &mdash; 11 titres, plus de 40 articles &mdash; est le code de gouvernance qui guidera chaque génération. L'arbre généalogique est tracé jusqu'à la 4<sup>ème</sup> génération, avec les métiers stratégiques déjà définis.</p>
+                <p class="pull">D'une cité de l'Essonne à un empire multigénérationnel. D'un gamin sans diplôme à un Bac+5 en cybersécurité. D'un studio à crédit à une SCI de quatre biens. D'un homme seul à une dynastie.</p>
+            </section>
 
-            <!-- Message aux générations futures -->
-            <div class="histoire-message">
-                <div class="preamble-border">
-                    <p class="preamble-text" style="font-size: 1.4rem;">
-                        <em>Aux générations futures du Groupe ALLAM,</em>
-                    </p>
-                    <p class="preamble-text" style="margin-top: 1.5rem;">
-                        Si vous lisez ces mots, c'est que nous avons réussi à vous transmettre quelque chose. Mais comprenez bien d'où ça vient. Rien de tout ça n'existait avant nous. Pas d'héritage. Pas de réseau. Pas de famille riche. Juste une cité, des parents absents et un gamin sans diplôme qui a décidé que <strong>ça s'arrêtait avec lui</strong>.
-                    </p>
-                    <p class="preamble-text" style="margin-top: 1.5rem;">
-                        Chaque bien que vous voyez dans la SCI a été acheté avec des privations. Chaque entreprise a été construite avec des nuits blanches. Chaque centime a été pensé, calculé, investi — jamais gaspillé. Tout ça pour <strong>vous</strong>. Pour que vous soyez <strong>libres</strong>. Pour que vous n'ayez jamais à vivre ce que nous avons vécu.
-                    </p>
-                    <p class="preamble-text" style="margin-top: 1.5rem;">
-                        Alors <strong>ne détruisez jamais ce qui a été construit</strong>. Protégez-le. Faites-le grandir. Restez concentrés. Chaque décision que vous prenez ne concerne pas que vous — elle concerne vos enfants, vos petits-enfants et toutes les générations ALLAM qui viendront après vous. Pensez toujours plus loin que votre propre vie.
-                    </p>
-                    <p class="preamble-text" style="margin-top: 1.5rem;">
-                        Vous avez un avantage que je n'ai jamais eu : une famille, une structure, un patrimoine, une éducation et un chemin tracé. <strong>Utilisez-le.</strong> Ne le tenez jamais pour acquis. Ce qui a pris une vie à construire peut être détruit en un instant par la négligence ou l'orgueil.
-                    </p>
-                    <p class="preamble-text" style="margin-top: 1.5rem;">
-                        Soyez ambitieux. Soyez disciplinés. Soyez unis. Soyez fiers de qui vous êtes et d'où vous venez. Et faites en sorte que chaque génération future soit encore plus fière de porter le nom <strong>ALLAM</strong>.
-                    </p>
-                    <p class="preamble-text" style="margin-top: 2rem; font-size: 1.2rem;">
-                        Avec tout mon amour et toute ma foi en vous,
-                    </p>
-                    <p class="preamble-text" style="margin-top: 0.5rem; font-size: 1.3rem;">
-                        <strong>Bilal ALLAM</strong> — Patriarche & Fondateur
-                    </p>
-                    <p class="preamble-text" style="margin-top: 2rem; font-size: 1.2rem;">
-                        &laquo; Nous sommes le changement que notre lignée attendait &raquo;
-                    </p>
-                </div>
-            </div>
+            <!-- ===================================================
+                 JOURNAL
+                 Partie vivante du livre : une entrée par visite.
+                 Pour en ajouter une, dupliquer le bloc
+                 <p class="entry-date">…</p> suivi de ses paragraphes,
+                 à la suite dans cette même section. La pagination
+                 se refait toute seule.
+                 =================================================== -->
+            <section class="chap" data-style="journal" data-num="" data-title="Journal de Valencia" data-epi="Je reviendrai vous raconter la suite.">
+                <h2>Journal de Valencia</h2>
 
-            <!-- Navigation vers page suivante -->
-            <div class="page-nav">
-                <a href="index.html" class="page-nav-link prev">
-                    <span class="page-nav-label">&larr; Retour</span>
-                    <span class="page-nav-title">Accueil</span>
-                </a>
-                <a href="arbre.html" class="page-nav-link next">
-                    <span class="page-nav-label">Suivant &rarr;</span>
-                    <span class="page-nav-title">Arbre Généalogique</span>
-                </a>
-            </div>
-        </div>
+                <p class="entry-date">Été 2026</p>
+                <p>Nous sommes arrivés à Valencia en juin 2026. Nouveau pays, nouvelle langue, tout à réapprendre. Il faut s'adapter. Nous avons cette chance immense, votre mère et moi, de travailler tous les deux en télétravail : le pays change, le travail suit.</p>
+                <p>Dahlia a fêté ses deux ans le 20 juillet. Cindy et Mehdi sont venus nous rendre visite avec leurs trois enfants, et la maison s'est remplie de cris et de rires. Elle aime sa nouvelle vie : une maison plus grande, sa chambre à elle, la mer, le soleil, les parcs. Elle ne sait pas encore ce que ce déménagement a coûté. Elle le saura un jour, en lisant ces lignes.</p>
+                <p>De mon côté, j'ai mis la structure en place. Je suis en micro-entreprise, et j'ai créé le <strong>Groupe Allam Holding</strong>, <strong>Daelia Partners</strong> &mdash; qui porte WebPrime &mdash; et la <strong>SCI</strong>. L'architecture tiendra quand je ne serai plus là.</p>
+                <p>Je garde mes clients en création de sites internet, mais je dois être honnête : plus je vieillis, moins j'arrive à me sociabiliser. Je prends moins de nouveaux clients, j'en perds même. Mon esprit est ailleurs, entièrement tourné vers le bien-être et l'avenir de ma fille. J'y pense chaque jour, ça ne me quitte pas.</p>
+                <p>J'avais commencé une alternance en cybersécurité sur vingt et un mois. C'était mon filet de sécurité : un salaire fixe garanti en Espagne, au cas où WebPrime ne suivrait pas. Au bout de quatre mois, ça s'est mal passé avec le patron. Après une dispute, j'ai décidé d'arrêter. <strong>La fierté et l'honneur passent avant l'argent</strong> &mdash; si vous ne retenez qu'une chose de cette page, retenez celle-là.</p>
+                <p>L'argent que génère WebPrime reste dans la société, et la société appartient à la holding. Je ne peux donc pas le sortir pour moi. <strong>Mes revenus personnels se sont effondrés</strong> &mdash; il ne me reste qu'une fraction de ce que je gagnais &mdash; parce que les bénéfices sont destinés à la SCI, c'est-à-dire à vous. Heureusement, votre mère gagne bien sa vie et porte le foyer à elle seule. Psychologiquement, c'est dur. Je cherche encore des solutions. Mais j'ai confiance en Dieu et au destin : tout s'arrangera.</p>
+                <p>En ce moment, financièrement, c'est compliqué : un loyer élevé, des dépenses qui s'accumulent. Et pourtant l'école privée de Dahlia reste ma priorité absolue, même si elle coûte à elle seule plusieurs mois de mes revenus. Elle y entrera en septembre 2026, à deux ans. S'il le faut, je livrerai des repas à domicile. Mais <strong>je ne toucherai pas à l'argent de l'entreprise</strong> : cet argent-là est pour la famille, pas pour me soulager.</p>
+                <p>Je travaille aussi sur <strong>WayZo</strong>, mon application pour chauffeurs privés. Elle n'existe nulle part ailleurs. On verra bien ce que ça donne.</p>
+                <p class="entry-sign">Je reviendrai vous raconter la suite.</p>
+            </section>
+
+            <section class="chap" data-style="letter" data-num="&#9830;" data-title="Aux générations futures" data-epi="Si vous lisez ces mots, c'est que nous avons réussi.">
+                <h2>Épilogue &mdash; Aux générations futures</h2>
+                <p class="salut"><em>Aux générations futures du Groupe ALLAM,</em></p>
+                <p>Si vous lisez ces mots, c'est que nous avons réussi à vous transmettre quelque chose. Mais comprenez bien d'où ça vient. Rien de tout ça n'existait avant nous. Pas d'héritage. Pas de réseau. Pas de famille riche. Juste une cité, des parents absents et un gamin sans diplôme qui a décidé que <strong>ça s'arrêtait avec lui</strong>.</p>
+                <p>Chaque bien que vous voyez dans la SCI a été acheté avec des privations. Chaque entreprise a été construite avec des nuits blanches. Chaque centime a été pensé, calculé, investi &mdash; jamais gaspillé. Tout ça pour <strong>vous</strong>. Pour que vous soyez <strong>libres</strong>. Pour que vous n'ayez jamais à vivre ce que nous avons vécu.</p>
+                <p>Alors <strong>ne détruisez jamais ce qui a été construit</strong>. Protégez-le. Faites-le grandir. Restez concentrés. Chaque décision que vous prenez ne concerne pas que vous &mdash; elle concerne vos enfants, vos petits-enfants et toutes les générations ALLAM qui viendront après vous. Pensez toujours plus loin que votre propre vie.</p>
+                <p>Vous avez un avantage que je n'ai jamais eu : une famille, une structure, un patrimoine, une éducation et un chemin tracé. <strong>Utilisez-le.</strong> Ne le tenez jamais pour acquis. Ce qui a pris une vie à construire peut être détruit en un instant par la négligence ou l'orgueil.</p>
+                <p>Soyez ambitieux. Soyez disciplinés. Soyez unis. Soyez fiers de qui vous êtes et d'où vous venez. Et faites en sorte que chaque génération future soit encore plus fière de porter le nom <strong>ALLAM</strong>.</p>
+                <p class="sign-off">Avec tout mon amour et toute ma foi en vous,</p>
+                <p class="sign-name"><strong>Bilal ALLAM</strong></p>
+                <p class="sign-role">Patriarche &amp; Fondateur</p>
+            </section>
+
+        </article>
     </section>
+
+    <!-- Navigation vers page suivante -->
+    <div class="container">
+        <div class="page-nav">
+            <a href="index.html" class="page-nav-link prev">
+                <span class="page-nav-label">&larr; Retour</span>
+                <span class="page-nav-title">Accueil</span>
+            </a>
+            <a href="arbre.html" class="page-nav-link next">
+                <span class="page-nav-label">Suivant &rarr;</span>
+                <span class="page-nav-title">Arbre Généalogique</span>
+            </a>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="footer">
@@ -219,5 +209,6 @@
     </footer>
 
     <script src="script.js"></script>
+    <script src="book.js"></script>
 </body>
 </html>
